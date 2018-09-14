@@ -4,6 +4,7 @@ jdk: oraclejdk8
 install: true
 
 before_install:
+  - sudo apt-get update
   - sudo apt-get install android-sdk
   - chmod +x ".travis/build.sh"
   - chmod +x "gradlew"
