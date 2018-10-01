@@ -42,7 +42,7 @@ public class Main {
         DeliveryService service = new DeliveryService(config);
 
         System.out.println("Implicit models test:" + service.items().get().getItems().get(0).getSystem().getCodename());
-
+        //Demo class object creation.
         Demo demo = new Demo();
         demo.runTests();
 
