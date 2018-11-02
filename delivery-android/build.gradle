@@ -8,7 +8,21 @@
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
+    }
+}
+
 apply plugin: 'com.android.library'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'maven-publish'
+
 
 android {
     compileSdkVersion 26
@@ -35,6 +49,21 @@ android {
     }
 }
 
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.amitshekhar.android:rx2-android-networking:1.0.0'
@@ -44,33 +73,98 @@ dependencies {
     }
 }
 
-ext {
-    bintrayRepo = 'kenticocloud-maven'
-    bintrayName = 'delivery-android'
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
-    publishedGroupId = 'com.kenticocloud'
-    libraryName = 'KenticoCloudDeliveryAndroid'
-    artifact = 'delivery-android'
 
-    libraryDescription = 'Android SDK for Kentico Cloud Delivery API'
-    siteUrl = 'https://kenticocloud.com/'
-    gitUrl = 'https://github.com/Kentico/KenticoCloudDeliveryJavaRxSDK.git'
 
-    libraryVersion = '3.0.0'
 
-    developerId = 'kentico_richards'
-    developerName = 'Richard Sustek'
-    developerEmail = 'ennspassion@gmail.com'
-
-    developerId = 'kentico_timothyf'
-    developerName = 'Timothy Fenton'
-    developerEmail = 'timothyf@kentico.com'
-
-    licenseName = 'MIT'
-    licenseUrl = 'https://github.com/Kentico/KenticoCloudDeliveryJavaRxSDK/blob/master/LICENSE.md'
-    allLicenses = ["MIT"]
+bintray {
+    user = properties.getProperty('BINTRAY_USER')
+    key = properties.getProperty('BINTRAY_KEY')
+    pkg {
+        repo = 'KenticoCloudDeliveryJavaRxSDK'
+        name = 'delivery-android'
+        userOrg = 'kentico'
+        licenses = ['MIT']
+        vcsUrl = 'https://github.com/bintray/gradle-bintray-plugin.git'
+        version {
+            name = properties.getProperty('SDK_VERSION')
+            desc = properties.getProperty('ANDROID_VERSION_DESC')
+            released  = new Date()
+            vcsTag = properties.getProperty('SDK_VERSION')
+            gpg {
+                sign = true //Determines whether to GPG sign the files. The default is false
+                passphrase = properties.getProperty('BINTRAY_GPG') //Optional. The passphrase for GPG signing'
+            }
+            mavenCentralSync {
+                sync = true
+                user = properties.getProperty('SONATYPE_USER')
+                password = properties.getProperty('SONATYPE_PASSWORD')
+            }
+        }
+    }
+    publications = ['BintrayPublication']
 }
 
-// Place it at the end of the file
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+
+// Create the pom configuration:
+def pomConfig = {
+    licenses {
+        license {
+            name "MIT"
+            url "https://github.com/Kentico/KenticoCloudDeliveryJavaRxSDK/blob/master/LICENSE.md"
+            distribution "repo"
+        }
+    }
+    developers {
+        developer {
+            id "kentico_richards"
+            name "Richard Sustek"
+            email "ennspassion@gmail.com"
+        }
+        developer {
+            id "kentico_timothyf"
+            name "Timothy Fenton"
+            email "timothyf@kentico.com"
+        }
+        developer {
+            id "kentico_jurajb"
+            name "Juraj Bielik"
+            email "jurajb@kentico.com"
+        }
+    }
+
+    scm {
+        url "git@github.com:Kentico/KenticoCloudDeliveryJavaRxSDK.git"
+    }
+}
+
+// Create the publication with the pom configuration:
+publishing {
+    publications {
+        BintrayPublication(MavenPublication){
+            artifact sourcesJar
+            artifact javadocJar
+            artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
+            groupId 'com.kenticocloud'
+            artifactId 'delivery-android'
+            version properties.getProperty('SDK_VERSION')
+            pom.withXml {
+                def dependenciesNode = asNode().appendNode('dependencies')
+                // Iterate over the compile dependencies (we don't want the test ones), adding a <dependency> node for each
+                configurations.compile.allDependencies.each {
+                    def dependencyNode = dependenciesNode.appendNode('dependency')
+                    dependencyNode.appendNode('groupId', it.group)
+                    dependencyNode.appendNode('artifactId', it.name)
+                    dependencyNode.appendNode('version', it.version)
+                }
+                def root = asNode()
+                root.appendNode('description', 'Android SDK for Kentico Cloud Delivery API')
+                root.appendNode('name', 'KenticoCloudDeliveryAndroid')
+                root.appendNode('url', 'https://kenticocloud.com/')
+                root.children().last() + pomConfig
+            }
+        }
+    }
+}

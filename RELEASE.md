@@ -10,11 +10,17 @@ To release a new version of the SDK you will need to follow the below guide:
 
 First, add the following lines to your local.properties within the Android SDK project:
 
-bintray.user=<Username>
-bintray.apikey=<API Key>
-bintray.gpg.password=<GPG Password>
+BINTRAY_USER=<bintray username>
+BINTRAY_KEY=<bintray api key>
+BINTRAY_GPG=<gpg key for signing artifacts in order to be transferred to maven>
+SONATYPE_USER=<sonatype user>
+SONATYPE_PASSWORD=<sonatype password>
+SDK_VERSION=<sdk version, i.e '3.0.2'>
+RX_VERSION_DESC=<description for what is included in this version to rx sdk>
+CORE_VERSION_DESC=<description for what is included in this version to core sdk>
+ANDROID_VERSION_DESC=<description for what is included in this version to android sdk>
 
-Username is a JCenter/ Bintray user that will be used for distributing the new version. The user must be part of the "Kentico" organization on JCenter before publishing. To request access to 'Kentico' organization please email developerscommunity@kentico.com.
+The Bintray user must be part of the "Kentico" organization on Bintray before publishing. To request access to 'Kentico' organization please email developerscommunity@kentico.com.
 
 API Key is the Bintray API key for this specific user, you can locate this from your user profile page.
 
@@ -22,22 +28,8 @@ GPG Password is used for the public/ private GPG keypair, this is used for signi
 
 Once you have the Bintray local properties in place you are ready to push a new version to Bintray. To do this do the following:
 
-1. Open the build.gradle for each library and iterate the library version however suits the change you made.
-2. Open 'Terminal' in Android Studio
-3. Type 'gradlew install' and wait for 'BUILD SUCCESSFUL'
-4. Type 'gradlew bintrayUpload' and wait for 'SUCCESSFUL' 
-5. Login to http://bintray.com (Jcenter)
-  a. Username: <Username>
-  b. Password: <Password>
-6. Click on the 'KenticoCloudDeliveryJavaRxSDK' repository (only visible when in the 'Kentico' organization)
-7. Confirm that the artifact versions were updated
+1. Open 'Terminal' in Android Studio
+2. Type 'gradlew clean build' and wait for 'BUILD SUCCESSFUL'
+3. Type 'gradlew build bintrayUpload' and wait for 'BUILD SUCCESSFUL'
   
-Now that the artifacts are up on JCenter we need to sync them over to Maven to ensure all developers will be able to have access to them. In order to do this you will need to ensure you have a Sonatype account setup and then request access to the Maven repo by sending us an email at developerscommunity@kentico.com. Once you have access to the repo you can do the following to commit your JCenter changes over to Maven
-
-1. Go back to Bintray and login
-2. Click on the name of an artifact (for example 'delivery-android')
-3. Click the 'Maven Central' tab
-4. Click 'Sync' ( this will synchronize the new version of the artifact to Maven )
-5. Repeat steps 2 – 4 for each of the artifacts
-
-Once you have completed these steps the artifacts should be fully up to date on both JCenter and Maven.
+The artifacts should be pushed to both Bintray (jcenter) and Maven. Maven will take a bit to show the new versions, but Bintray should be almost instantaneous
