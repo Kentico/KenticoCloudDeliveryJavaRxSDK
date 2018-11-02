@@ -76,8 +76,7 @@ dependencies {
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
-
-
+def latestVersion = properties.getProperty('SDK_VERSION')
 
 bintray {
     user = properties.getProperty('BINTRAY_USER')
@@ -89,7 +88,7 @@ bintray {
         licenses = ['MIT']
         vcsUrl = 'https://github.com/bintray/gradle-bintray-plugin.git'
         version {
-            name = properties.getProperty('SDK_VERSION')
+            name = "$latestVersion"
             desc = properties.getProperty('ANDROID_VERSION_DESC')
             released  = new Date()
             vcsTag = properties.getProperty('SDK_VERSION')
@@ -149,7 +148,7 @@ publishing {
             artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
             groupId 'com.kenticocloud'
             artifactId 'delivery-android'
-            version "3.0.2"
+            version "$latestVersion"
             pom.withXml {
                 def dependenciesNode = asNode().appendNode('dependencies')
                 // Iterate over the compile dependencies (we don't want the test ones), adding a <dependency> node for each

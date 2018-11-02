@@ -41,6 +41,8 @@ repositories {
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
+def latestVersion = properties.getProperty('SDK_VERSION')
+
 bintray {
     user = properties.getProperty('BINTRAY_USER')
     key = properties.getProperty('BINTRAY_KEY')
@@ -51,7 +53,7 @@ bintray {
         licenses = ['MIT']
         vcsUrl = 'https://github.com/bintray/gradle-bintray-plugin.git'
         version {
-            name = properties.getProperty('SDK_VERSION')
+            name = "$latestVersion"
             desc = properties.getProperty('CORE_VERSION_DESC')
             released  = new Date()
             vcsTag = properties.getProperty('SDK_VERSION')
@@ -110,7 +112,7 @@ publishing {
             artifact javadocJar
             groupId 'com.kenticocloud'
             artifactId 'delivery-core'
-            version "3.0.2"
+            version "$latestVersion"
             pom.withXml {
                 def root = asNode()
                 root.appendNode('description', 'Java SDK Core for Kentico Cloud Delivery API')
