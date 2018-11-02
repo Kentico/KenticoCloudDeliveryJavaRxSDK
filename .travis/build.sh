@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./gradlew clean build --stacktrace --debug
+./gradlew clean build
