@@ -149,7 +149,7 @@ publishing {
             artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
             groupId 'com.kenticocloud'
             artifactId 'delivery-android'
-            version properties.getProperty('SDK_VERSION')
+            version "3.0.2"
             pom.withXml {
                 def dependenciesNode = asNode().appendNode('dependencies')
                 // Iterate over the compile dependencies (we don't want the test ones), adding a <dependency> node for each

@@ -107,7 +107,7 @@ publishing {
             artifact javadocJar
             groupId 'com.kenticocloud'
             artifactId 'delivery-rx'
-            version properties.getProperty('SDK_VERSION')
+            version "3.0.2"
             pom.withXml {
                 def root = asNode()
                 root.appendNode('description', 'Java RX SDK for Kentico Cloud Delivery API')
