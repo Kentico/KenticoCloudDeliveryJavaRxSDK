@@ -15,10 +15,6 @@ android:
   - platform-tools
   - build-tools-26.0.2
   - android-26
-  - sys-img-armeabi-v7a-android-24
-  - extra-android-m2repository
-  - extra-google-m2repository
-  - extra-android-support
 
 script:
   - ".travis/build.sh"
