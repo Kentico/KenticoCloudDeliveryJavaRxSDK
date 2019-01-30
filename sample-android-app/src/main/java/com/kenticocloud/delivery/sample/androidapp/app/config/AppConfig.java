@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 import io.reactivex.functions.Function;
 
 public class AppConfig {
-    public final static String KENTICO_CLOUD_PROJECT_ID = "683771be-aa26-4887-b1b6-482f56418ffd";
+    public final static String KENTICO_CLOUD_PROJECT_ID = "975bf280-fd91-488c-994c-2f04416e5ee3";
 
     public static List<TypeResolver<?>> getTypeResolvers(){
 
