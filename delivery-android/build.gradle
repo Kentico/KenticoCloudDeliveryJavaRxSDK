@@ -25,11 +25,11 @@ apply plugin: 'maven-publish'
 
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
 
@@ -65,10 +65,10 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.amitshekhar.android:rx2-android-networking:1.0.0'
-    testCompile 'junit:junit:4.12'
-    compile(project(path: ':delivery-core')) {
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    api 'com.amitshekhar.android:rx2-android-networking:1.0.0'
+    testImplementation 'junit:junit:4.12'
+    api(project(path: ':delivery-core')) {
         exclude group: 'org.json', module: 'json'
     }
 }
