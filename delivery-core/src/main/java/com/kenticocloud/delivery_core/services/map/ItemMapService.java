@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kenticocloud.delivery_core.config.IDeliveryConfig;
 import com.kenticocloud.delivery_core.elements.AssetsElement;
 import com.kenticocloud.delivery_core.elements.ContentElement;
+import com.kenticocloud.delivery_core.elements.CustomElement;
 import com.kenticocloud.delivery_core.elements.DateTimeElement;
 import com.kenticocloud.delivery_core.elements.LinkedItemsElement;
 import com.kenticocloud.delivery_core.elements.MultipleChoiceElement;
@@ -210,6 +211,10 @@ public class ItemMapService {
 
         if (Objects.equals(type, FieldType.multiple_choice.toString())) {
             return new MultipleChoiceElement(this.objectMapper, name, codename, type, value);
+        }
+
+        if (Objects.equals(type, FieldType.custom.toString())) {
+            return new CustomElement(this.objectMapper, name, codename, type, value);
         }
 
         throw new KenticoCloudException("Field type '" + type + "' is not supported", null);
