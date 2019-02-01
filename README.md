@@ -165,7 +165,7 @@ List<Cafe> cafes = response.getItems();
 
 1. Make sure that your model extends the `ContentItem` class.
 2. Create public fields with an `ElementMapping` decorator. This will make sure that the value from your field is mapped to the content item element.
-3. Based on the type of field, choose the proper element type. Supported element types include: `AssetsElement`, `ContentElement`, `DateTimeElement`, `LinkedItemsElement`, `MultipleChoiceElement`, `NumberElement`, `RichTextElement`, `TaxonomyElement`, `TextElement` and `UrlSlugElement`.
+3. Based on the type of field, choose the proper element type. Supported element types include: `AssetsElement`, `ContentElement`, `DateTimeElement`, `LinkedItemsElement`, `MultipleChoiceElement`, `NumberElement`, `RichTextElement`, `TaxonomyElement`, `TextElement`,  `UrlSlugElement` and `CustomElement`.
 
 The following example shows a typical class with different types of elements:
 
@@ -187,6 +187,52 @@ public final class Coffee extends ContentItem {
     public RichTextElement shortDescription;
 }
 ```
+
+#### Using custom models for Custom Elements
+An example of a custom "color" field:
+
+```
+ "color": {
+  "type": "custom",
+  "name": "Color",
+  "value": "{\"red\":167,\"green\":96,\"blue\":197}"
+  }
+```
+
+You can create classes that will extract values of the custom element into dedicated properties (red, green, blue for "color") so they are easier to work with. Then, when getting the custom element value, an object of specific type is returned instead of the universal `CustomElement`.
+
+````java
+public final class Documentation extends ContentItem {
+
+    public static final String TYPE = "documentation";
+
+    @ElementMapping("color")
+    public CustomElement rawColor;
+
+    private Color colorValue;
+
+    @ElementMapping("readme")
+    public CustomElement rawReadme;
+
+    private Readme readmeValue;
+
+    public Color getColor() {
+        if (colorValue == null) {
+            colorValue = new Color(rawColor);
+        }
+        return colorValue;
+    }
+
+    public Readme getReadme() {
+        if (readmeValue == null) {
+            readmeValue = new Readme(rawReadme);
+        }
+        return readmeValue;
+    }
+}
+````
+
+Note that Custom elements are only supported in the latest version of the SDK.
 
 ### Filtering, sorting
 
