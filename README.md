@@ -36,23 +36,23 @@ implementation 'com.kenticocloud:delivery-rx:3.0.0'
 implementation 'com.kenticocloud:delivery-android:3.0.0'
 ```
 
-*Note*: The only difference between these two dependencies is the 'Observable' they present for ReactiveX to subscribe to. Android will present a standard *Rx2AndroidNetworking* request while Java will present a generic *http* request as an observable. Most of your imports will come from the shared `com.kenticocloud.delivery_core` which is automatically included with both packages.
+**Note**: The only difference between these two dependencies is the 'Observable' they present for ReactiveX to subscribe to. Android will present a standard *Rx2AndroidNetworking* request while Java will present a generic *http* request as an observable. Most of your imports will come from the shared `com.kenticocloud.delivery_core` which is automatically included with both packages.
 
 ### Configuration
 
 ```java
 // Kentico Cloud project ID
-String projectId = "683771be-aa26-4887-b1b6-482f56418ffd";
+String projectId = "975bf280-fd91-488c-994c-2f04416e5ee3";
 
-// Type resolvers are required to convert the retrieved content items to their strongly-typed models
+// Type resolvers are required to convert the retrieved content items to their strongly typed models
 // based on their 'system.type' property
 List<TypeResolver<?>> typeResolvers = new ArrayList<>();
 
-// First, create strongly-typed models representing your items. 
+// First, create strongly typed models representing your items. 
 // This is optional, but strongly recommended. It is best practice to use safe types 
 // instead of relying on dynamic objects and values. For more details, see
 // https://developer.kenticocloud.com/v1/docs/strongly-typed-models
-// Here is an example of a strongly-typed model of the 'Cafe' content type.
+// Here is an example of a strongly-typed model for the 'Cafe' content type.
 public final class Cafe extends ContentItem {
 
     // Codename of your content type in Kentico Cloud
@@ -73,10 +73,10 @@ public final class Cafe extends ContentItem {
     }
 }
 
-// Adds a type resolver that will eventually convert items from JSON to your strongly-typed models at runtime.
-// Please note that you currently need to have models for all content types you want to work with.
-// We plan to release an update that will allow you to return 
-// a generic ContentItem if the strongly-typed model is not found.
+// Adds a type resolver that will eventually convert items from JSON to your strongly typed models at runtime.
+// Note: Currently, you need to have models for all content types you want to work with.
+// We plan to release an update that will allow you to return a generic
+// ContentItem if the strongly typed model is not found.
 typeResolvers.add(new TypeResolver<>(Cafe.TYPE, new Function<Void, Cafe>() {
     @Override
     public Cafe apply(Void input) {
@@ -135,7 +135,7 @@ deliveryService.<Cafe>items()
             // Gets cafe items
             List<Cafe> cafes = response.getItems();
 
-            // Uses a method from your strongly-typed model
+            // Uses a method from your strongly typed model
             String country = cafes.get(0).getCountry();
         }
 
@@ -164,8 +164,8 @@ List<Cafe> cafes = response.getItems();
 ### Property binding 
 
 1. Make sure that your model extends the `ContentItem` class.
-2. Create public fields with an `ElementMapping` decorator. This will make sure that the value from your field is mapped to the content item element.
-3. Based on the type of field, choose the proper element type. Supported element types include: `AssetsElement`, `ContentElement`, `DateTimeElement`, `LinkedItemsElement`, `MultipleChoiceElement`, `NumberElement`, `RichTextElement`, `TaxonomyElement`, `TextElement`,  `UrlSlugElement` and `CustomElement`.
+2. Create public fields with an `ElementMapping` decorator. This will make sure that the value from your field is mapped to the content element within the content item.
+3. Based on the type of the field, choose the proper element type. Supported element types include: `AssetsElement`, `ContentElement`, `DateTimeElement`, `LinkedItemsElement`, `MultipleChoiceElement`, `NumberElement`, `RichTextElement`, `TaxonomyElement`, `TextElement`,  `UrlSlugElement` and `CustomElement`.
 
 The following example shows a typical class with different types of elements:
 
@@ -189,45 +189,39 @@ public final class Coffee extends ContentItem {
 ```
 
 #### Using custom models for Custom Elements
-An example of a custom "color" field:
+
+Custom elements are a type of content elements that you define yourself within Kentico Cloud. See [Integrating your own content editing features](https://developer.kenticocloud.com/docs/integrating-content-editing-features) to learn more about creating and using your own elements.
+
+Here's an example of a custom element named "color":
 
 ```
- "color": {
+"color": {
   "type": "custom",
   "name": "Color",
   "value": "{\"red\":167,\"green\":96,\"blue\":197}"
-  }
+}
 ```
 
-You can create classes that will extract values of the custom element into dedicated properties (red, green, blue for "color") so they are easier to work with. Then, when getting the custom element value, an object of specific type is returned instead of the universal `CustomElement`.
+You can create classes that will extract values of the custom element into dedicated properties (for example, red, green, blue for "color") so that they are easier to work with. Then, when getting the custom element value, an object of specific type is returned instead of the universal `CustomElement`.
 
 ````java
-public final class Documentation extends ContentItem {
+public final class ColoredText extends ContentItem {
 
-    public static final String TYPE = "documentation";
+    public static final String TYPE = "colored_text";
+
+    @ElementMapping("text")
+    public TextElement text;
 
     @ElementMapping("color")
     public CustomElement rawColor;
 
     private Color colorValue;
 
-    @ElementMapping("readme")
-    public CustomElement rawReadme;
-
-    private Readme readmeValue;
-
     public Color getColor() {
         if (colorValue == null) {
             colorValue = new Color(rawColor);
         }
         return colorValue;
-    }
-
-    public Readme getReadme() {
-        if (readmeValue == null) {
-            readmeValue = new Readme(rawReadme);
-        }
-        return readmeValue;
     }
 }
 ````
@@ -361,7 +355,6 @@ defaultQueryConfig.setUsePreviewMode(true);
 
 DeliveryConfig config = new DeliveryConfig(projectId, typeResolvers, defaultQueryConfig);
 
-
 // Enables preview mode for a specific call. This overrides global configuration.
 MultipleItemQuery<Cafe> query = deliveryService.<Cafe>items()
     .type(Cafe.TYPE)
@@ -393,12 +386,12 @@ During initialization of the `DeliveryConfig` you can configure the following op
 
 | Method        | Use
 | ------------- |:-------------:
-| withTypeResolvers | Sets type resolvers responsible for mapping API responses to strongly-typed models.
+| withTypeResolvers | Sets type resolvers responsible for mapping API responses to strongly typed models.
 | withPreviewApiKey      | Sets preview API key.
 | withSecuredApiKey | Sets secured API key.
 | withDeliveryApiUrl | Sets custom URL of a Kentico Cloud endpoint.
 | withDeliveryPreviewApiUrl | Sets custom URL of a Kentico Cloud preview endpoint.
-| withThrowExceptionForUnknownTypes | If enabled, the SDK will throw an Exception when it cannot find a strongly-typed model (type resolver) of an item in the response.
+| withThrowExceptionForUnknownTypes | If enabled, the SDK will throw an Exception when it cannot find a strongly typed model (type resolver) of an item in the response.
 | withDefaultQueryConfig | Sets default query config for all queries. This is useful when you want to set a default behavior and then override it on a per-query level.
 
 Example:
@@ -412,7 +405,7 @@ IDeliveryConfig config = DeliveryConfig.newConfig("projectId")
 
 ### Handling errors
 
-The SDK will automatically map [Kentico Cloud error responses](https://developer.kenticocloud.com/v1/reference) to a `KenticoCloudResponseException` runtime exception that you can handle.
+The SDK will automatically map [Kentico Cloud error responses](https://developer.kenticocloud.com/v1/reference#error-responses) to a `KenticoCloudResponseException` runtime exception that you can handle.
 
 ```java
 try {
@@ -425,6 +418,7 @@ try {
 ```
 
 ## Sample applications
+
 | Android | JavaRx |
 | ------ |-----|
 | [![Android](https://vignette.wikia.nocookie.net/scribblenauts/images/2/24/Android_Logo.png/revision/latest?cb=20130410160638)](https://github.com/Kentico/KenticoCloudDeliveryJavaRxSDK/tree/master/sample-android-app) | [![JavaRx](http://reactivex.io/assets/Rx_Logo_S.png)](https://github.com/Kentico/KenticoCloudDeliveryJavaRxSDK/tree/master/sample-java-app) |
