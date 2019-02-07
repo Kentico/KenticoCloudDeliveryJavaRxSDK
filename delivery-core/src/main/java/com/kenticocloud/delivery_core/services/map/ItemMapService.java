@@ -40,7 +40,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
 public class ItemMapService {
 
@@ -176,48 +175,45 @@ public class ItemMapService {
         return elements;
     }
 
-    private ContentElement mapElement(String name, String codename, String type, JsonNode value, JsonNode linkedItems) throws JsonProcessingException, IllegalAccessException {
-        if (Objects.equals(type, FieldType.modular_content.toString())) {
-            return mapLinkedItemsElement(name, codename, type, value, linkedItems);
-        }
+    private ContentElement mapElement(String name, String codename, String type, JsonNode value, JsonNode linkedItems) throws JsonProcessingException,IllegalAccessException {
+        FieldType fieldType = getFieldTypeEnum(type);
 
-        if (Objects.equals(type, FieldType.text.toString())) {
-            return new TextElement(this.objectMapper, name, codename, type, value);
+        switch (fieldType) {
+            case text:
+                return new TextElement(this.objectMapper, name, codename, type, value);
+            case rich_text:
+                return new RichTextElement(this.objectMapper, name, codename, type, value);
+            case asset:
+                return new AssetsElement(this.objectMapper, name, codename, type, value);
+            case number:
+                return new NumberElement(this.objectMapper, name, codename, type, value);
+            case date_time:
+                return new DateTimeElement(this.objectMapper, name, codename, type, value);
+            case url_slug:
+                return new UrlSlugElement(this.objectMapper, name, codename, type, value);
+            case taxonomy:
+                return new TaxonomyElement(this.objectMapper, name, codename, type, value);
+            case modular_content:
+                return mapLinkedItemsElement(name, codename, type, value, linkedItems);
+            case multiple_choice:
+                return new MultipleChoiceElement(this.objectMapper, name, codename, type, value);
+            case custom:
+                return new CustomElement(this.objectMapper, name, codename, type, value);
+            default:
+                return ThrowOnUnsupportedType(type, null);
         }
+    }
 
-        if (Objects.equals(type, FieldType.date_time.toString())) {
-            return new DateTimeElement(this.objectMapper, name, codename, type, value);
+    private FieldType getFieldTypeEnum(String type) {
+        try {
+            return FieldType.valueOf(type);
+        } catch (IllegalArgumentException exception) {
+            return ThrowOnUnsupportedType(type, exception);
         }
+    }
 
-        if (Objects.equals(type, FieldType.rich_text.toString())) {
-            return new RichTextElement(this.objectMapper, name, codename, type, value);
-        }
-
-        if (Objects.equals(type, FieldType.url_slug.toString())) {
-            return new UrlSlugElement(this.objectMapper, name, codename, type, value);
-        }
-
-        if (Objects.equals(type, FieldType.asset.toString())) {
-            return new AssetsElement(this.objectMapper, name, codename, type, value);
-        }
-
-        if (Objects.equals(type, FieldType.number.toString())) {
-            return new NumberElement(this.objectMapper, name, codename, type, value);
-        }
-
-        if (Objects.equals(type, FieldType.taxonomy.toString())) {
-            return new TaxonomyElement(this.objectMapper, name, codename, type, value);
-        }
-
-        if (Objects.equals(type, FieldType.multiple_choice.toString())) {
-            return new MultipleChoiceElement(this.objectMapper, name, codename, type, value);
-        }
-
-        if (Objects.equals(type, FieldType.custom.toString())) {
-            return new CustomElement(this.objectMapper, name, codename, type, value);
-        }
-
-        throw new KenticoCloudException("Field type '" + type + "' is not supported", null);
+    private <T> T ThrowOnUnsupportedType(String type, Throwable cause) {
+        throw new KenticoCloudException("Field type '" + type + "' is not supported", cause);
     }
 
     private LinkedItemsElement mapLinkedItemsElement(String name, String fieldCodename, String type, JsonNode fieldValue, JsonNode linkedItems) throws JsonProcessingException, IllegalAccessException {
