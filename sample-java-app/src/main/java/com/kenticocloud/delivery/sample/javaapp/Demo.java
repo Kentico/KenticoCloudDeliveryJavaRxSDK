@@ -13,7 +13,6 @@ package com.kenticocloud.delivery.sample.javaapp;
 import com.kenticocloud.delivery.sample.javaapp.models.Article;
 import com.kenticocloud.delivery.sample.javaapp.models.Cafe;
 import com.kenticocloud.delivery_core.config.DeliveryConfig;
-import com.kenticocloud.delivery_core.config.IDeliveryConfig;
 import com.kenticocloud.delivery_core.interfaces.item.common.IQueryParameter;
 import com.kenticocloud.delivery_core.interfaces.item.item.IContentItem;
 import com.kenticocloud.delivery_core.models.common.Filters;

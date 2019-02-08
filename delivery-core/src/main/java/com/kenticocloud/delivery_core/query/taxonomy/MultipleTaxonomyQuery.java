@@ -13,12 +13,9 @@ package com.kenticocloud.delivery_core.query.taxonomy;
 import com.kenticocloud.delivery_core.adapters.IHttpAdapter;
 import com.kenticocloud.delivery_core.adapters.IRxAdapter;
 import com.kenticocloud.delivery_core.config.IDeliveryConfig;
-import com.kenticocloud.delivery_core.interfaces.item.common.IQueryConfig;
-import com.kenticocloud.delivery_core.interfaces.item.common.IQueryParameter;
 import com.kenticocloud.delivery_core.models.common.Parameters;
 import com.kenticocloud.delivery_core.models.exceptions.KenticoCloudException;
 import com.kenticocloud.delivery_core.models.taxonomy.DeliveryTaxonomyListingResponse;
-import com.kenticocloud.delivery_core.query.item.SingleItemQuery;
 
 import org.json.JSONObject;
 
@@ -52,7 +49,7 @@ public class MultipleTaxonomyQuery extends BaseTaxonomyQuery<MultipleTaxonomyQue
         return this.queryService.<JSONObject>getObservable(this.getQueryUrl(), this.queryConfig, this.getHeaders())
                 .map(new Function<JSONObject, DeliveryTaxonomyListingResponse>() {
                     @Override
-                    public DeliveryTaxonomyListingResponse apply(JSONObject jsonObject) throws KenticoCloudException {
+                    public DeliveryTaxonomyListingResponse apply(JSONObject jsonObject) {
                         try {
                             return responseMapService.mapDeliveryTaxonomyListingResponse(jsonObject);
                         } catch (IOException ex) {

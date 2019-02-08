@@ -13,15 +13,12 @@ package com.kenticocloud.delivery_core.query.item;
 import com.kenticocloud.delivery_core.adapters.IHttpAdapter;
 import com.kenticocloud.delivery_core.adapters.IRxAdapter;
 import com.kenticocloud.delivery_core.config.IDeliveryConfig;
-import com.kenticocloud.delivery_core.interfaces.item.common.IQueryConfig;
-import com.kenticocloud.delivery_core.interfaces.item.common.IQueryParameter;
 import com.kenticocloud.delivery_core.interfaces.item.item.IContentItem;
 import com.kenticocloud.delivery_core.models.common.Filters;
 import com.kenticocloud.delivery_core.models.common.OrderType;
 import com.kenticocloud.delivery_core.models.common.Parameters;
 import com.kenticocloud.delivery_core.models.exceptions.KenticoCloudException;
 import com.kenticocloud.delivery_core.models.item.DeliveryItemListingResponse;
-import com.kenticocloud.delivery_core.query.element.SingleContentTypeElementQuery;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -135,7 +132,7 @@ public final class MultipleItemQuery<TItem extends IContentItem> extends BaseIte
         return this.queryService.<JSONObject>getObservable(this.getQueryUrl(), this.queryConfig, this.getHeaders())
                 .map(new Function<JSONObject, DeliveryItemListingResponse<TItem>>() {
                     @Override
-                    public DeliveryItemListingResponse<TItem> apply(JSONObject jsonObject) throws KenticoCloudException {
+                    public DeliveryItemListingResponse<TItem> apply(JSONObject jsonObject) {
                         try {
                             return responseMapService.<TItem>mapItemListingResponse(jsonObject);
                         } catch (JSONException | IOException | IllegalAccessException ex) {
