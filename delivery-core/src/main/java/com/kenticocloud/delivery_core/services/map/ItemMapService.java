@@ -52,7 +52,7 @@ public class ItemMapService {
         this.objectMapper = objectMapper;
     }
 
-    public <TItem extends IContentItem> List<TItem> mapItems(List<ItemCloudResponses.ContentItemRaw> rawItems, JsonNode linkedItems) throws KenticoCloudException, JsonProcessingException, IllegalAccessException {
+    public <TItem extends IContentItem> List<TItem> mapItems(List<ItemCloudResponses.ContentItemRaw> rawItems, JsonNode linkedItems) throws JsonProcessingException, IllegalAccessException {
         List<TItem> mappedItems = new ArrayList<>();
 
         for (ItemCloudResponses.ContentItemRaw rawItem : rawItems) {
@@ -62,7 +62,7 @@ public class ItemMapService {
         return mappedItems;
     }
 
-    public <TItem extends IContentItem> TItem mapItem(ItemCloudResponses.ContentItemRaw rawItem, JsonNode linkedItems) throws KenticoCloudException, JsonProcessingException, IllegalAccessException {
+    public <TItem extends IContentItem> TItem mapItem(ItemCloudResponses.ContentItemRaw rawItem, JsonNode linkedItems) throws JsonProcessingException, IllegalAccessException {
         // try getting the mapped item using the resolver if available
         TItem item;
         boolean stronglyTyped = false;

@@ -13,8 +13,6 @@ package com.kenticocloud.delivery_core.query.element;
 import com.kenticocloud.delivery_core.adapters.IHttpAdapter;
 import com.kenticocloud.delivery_core.adapters.IRxAdapter;
 import com.kenticocloud.delivery_core.config.IDeliveryConfig;
-import com.kenticocloud.delivery_core.interfaces.item.common.IQueryConfig;
-import com.kenticocloud.delivery_core.interfaces.item.common.IQueryParameter;
 import com.kenticocloud.delivery_core.models.element.DeliveryContentTypeElementResponse;
 import com.kenticocloud.delivery_core.models.exceptions.KenticoCloudException;
 
@@ -46,7 +44,7 @@ public class SingleContentTypeElementQuery extends BaseContentTypeElementQuery<S
         return this.queryService.<JSONObject>getObservable(this.getQueryUrl(), this.queryConfig, this.getHeaders())
                 .map(new Function<JSONObject, DeliveryContentTypeElementResponse>() {
                     @Override
-                    public DeliveryContentTypeElementResponse apply(JSONObject jsonObject) throws KenticoCloudException {
+                    public DeliveryContentTypeElementResponse apply(JSONObject jsonObject) {
                         try {
                             return responseMapService.mapDeliveryContentTypeResponse(jsonObject);
                         } catch (IOException ex) {

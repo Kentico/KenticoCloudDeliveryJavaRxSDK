@@ -13,8 +13,6 @@ package com.kenticocloud.delivery_core.query.type;
 import com.kenticocloud.delivery_core.adapters.IHttpAdapter;
 import com.kenticocloud.delivery_core.adapters.IRxAdapter;
 import com.kenticocloud.delivery_core.config.IDeliveryConfig;
-import com.kenticocloud.delivery_core.interfaces.item.common.IQueryConfig;
-import com.kenticocloud.delivery_core.interfaces.item.common.IQueryParameter;
 import com.kenticocloud.delivery_core.models.exceptions.KenticoCloudException;
 import com.kenticocloud.delivery_core.models.type.DeliveryTypeResponse;
 
@@ -44,7 +42,7 @@ public class SingleTypeQuery extends BaseTypeQuery<SingleTypeQuery> {
         return this.queryService.<JSONObject>getObservable(this.getQueryUrl(), this.queryConfig, this.getHeaders())
                 .map(new Function<JSONObject, DeliveryTypeResponse>() {
                     @Override
-                    public DeliveryTypeResponse apply(JSONObject jsonObject) throws KenticoCloudException {
+                    public DeliveryTypeResponse apply(JSONObject jsonObject) {
                         try {
                             return responseMapService.mapDeliverySingleTypeResponse(jsonObject);
                         } catch (IOException ex) {
