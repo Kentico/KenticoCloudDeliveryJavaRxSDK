@@ -27,13 +27,13 @@ The first step is to include the SDK in your project, for example, as a Gradle c
 #### Java
 
 ```
-implementation 'com.kenticocloud:delivery-rx:3.0.0'
+implementation 'com.kenticocloud:delivery-rx:3.1.0'
 ```
 
 #### Android
 
 ```
-implementation 'com.kenticocloud:delivery-android:3.0.0'
+implementation 'com.kenticocloud:delivery-android:3.1.0'
 ```
 
 **Note**: The only difference between these two dependencies is the 'Observable' they present for ReactiveX to subscribe to. Android will present a standard *Rx2AndroidNetworking* request while Java will present a generic *http* request as an observable. Most of your imports will come from the shared `com.kenticocloud.delivery_core` which is automatically included with both packages.
