@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/Kentico/KenticoCloudDeliveryJavaRxSDK.svg?branch=master)](https://travis-ci.org/Kentico/KenticoCloudDeliveryJavaRxSDK)
-[![Forums](https://img.shields.io/badge/chat-on%20forums-orange.svg)](https://forums.kenticocloud.com)
+[![Stack Overflow](https://img.shields.io/stackexchange/stackoverflow/t/kentico%2dcloud.svg?label=Stack%20Overflow)](https://stackoverflow.com/tags/kentico-cloud)
 
 # Kentico Cloud Delivery JavaRx/AndroidRx SDK
 
