@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Kentico/KenticoCloudDeliveryJavaRxSDK.svg?branch=master)](https://travis-ci.org/Kentico/KenticoCloudDeliveryJavaRxSDK)
+[![Build Status](https://api.travis-ci.com/Kentico/KenticoCloudDeliveryJavaRxSDK.svg?branch=master)](https://travis-ci.com/Kentico/KenticoCloudDeliveryJavaRxSDK)
 [![Stack Overflow](https://img.shields.io/badge/Stack%20Overflow-ASK%20NOW-FE7A16.svg?logo=stackoverflow&logoColor=white)](https://stackoverflow.com/tags/kentico-cloud)
 
 # Kentico Cloud Delivery JavaRx/AndroidRx SDK
