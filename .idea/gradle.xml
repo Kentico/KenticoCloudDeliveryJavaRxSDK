@@ -3,23 +3,21 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <compositeConfiguration>
-          <compositeBuild compositeDefinitionSource="SCRIPT" />
-        </compositeConfiguration>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/delivery-android" />
-            <option value="$PROJECT_DIR$/delivery-core" />
-            <option value="$PROJECT_DIR$/delivery-rx" />
-            <option value="$PROJECT_DIR$/delivery-tests" />
-            <option value="$PROJECT_DIR$/sample-android-app" />
-            <option value="$PROJECT_DIR$/sample-java-app" />
+            <option value="$PROJECT_DIR$/delivery_android_sample" />
+            <option value="$PROJECT_DIR$/delivery_rx_sample" />
+            <option value="$PROJECT_DIR$/kontent-delivery-android" />
+            <option value="$PROJECT_DIR$/kontent-delivery-core" />
+            <option value="$PROJECT_DIR$/kontent-delivery-rx" />
+            <option value="$PROJECT_DIR$/kontent-delivery-tests" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
+        <option name="testRunner" value="PLATFORM" />
       </GradleProjectSettings>
     </option>
   </component>
