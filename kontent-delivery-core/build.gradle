@@ -1,0 +1,125 @@
+/*
+ * Copyright 2017 Kentico s.r.o. and Richard Sustek
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+apply plugin: 'java'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'maven-publish'
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile group: 'org.json', name: 'json', version: '20070829'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.9.1'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.1'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.9.1'
+    compile 'io.reactivex.rxjava2:rxjava:2.1.5'
+    testCompile 'junit:junit:4.12'
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+repositories {
+    jcenter()
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+def latestVersion = properties.getProperty('SDK_VERSION')
+
+bintray {
+    user = properties.getProperty('BINTRAY_USER')
+    key = properties.getProperty('BINTRAY_KEY')
+    pkg {
+        repo = 'kontent-java-rx-sdk'
+        name = 'kontent-delivery-core'
+        userOrg = 'kentico'
+        licenses = ['MIT']
+        vcsUrl = 'https://github.com/bintray/gradle-bintray-plugin.git'
+        version {
+            name = "$latestVersion"
+            desc = properties.getProperty('CORE_VERSION_DESC')
+            released  = new Date()
+            vcsTag = properties.getProperty('SDK_VERSION')
+            gpg {
+                sign = true //Determines whether to GPG sign the files. The default is false
+                passphrase = properties.getProperty('BINTRAY_GPG') //Optional. The passphrase for GPG signing'
+            }
+            mavenCentralSync {
+                sync = true
+                user = properties.getProperty('SONATYPE_USER')
+                password = properties.getProperty('SONATYPE_PASSWORD')
+            }
+        }
+    }
+    publications = ['BintrayPublication']
+}
+
+// Create the pom configuration:
+def pomConfig = {
+    licenses {
+        license {
+            name "MIT"
+            url "https://github.com/Kentico/kontent-java-rx-sdk/blob/master/LICENSE.md"
+            distribution "repo"
+        }
+    }
+    developers {
+        developer {
+            id "kentico_richards"
+            name "Richard Sustek"
+            email "ennspassion@gmail.com"
+        }
+        developer {
+            id "kentico_timothyf"
+            name "Timothy Fenton"
+            email "timothyf@kentico.com"
+        }
+        developer {
+            id "kentico_jurajb"
+            name "Juraj Bielik"
+            email "jurajb@kentico.com"
+        }
+    }
+
+    scm {
+        url "git@github.com:Kentico/kontent-java-rx-sdk.git"
+    }
+}
+
+// Create the publication with the pom configuration:
+publishing {
+    publications {
+        BintrayPublication(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+            groupId 'com.github.kentico'
+            artifactId 'kontent-delivery-core'
+            version "$latestVersion"
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', 'Java SDK Core for Kontent Delivery API')
+                root.appendNode('name', 'kontent-core-sdk')
+                root.appendNode('url', 'https://kontent.ai')
+                root.children().last() + pomConfig
+            }
+        }
+    }
+}

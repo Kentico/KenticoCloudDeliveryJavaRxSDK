@@ -1,16 +1,16 @@
-[![Build Status](https://api.travis-ci.com/Kentico/KenticoCloudDeliveryJavaRxSDK.svg?branch=master)](https://travis-ci.com/Kentico/KenticoCloudDeliveryJavaRxSDK)
-[![Stack Overflow](https://img.shields.io/badge/Stack%20Overflow-ASK%20NOW-FE7A16.svg?logo=stackoverflow&logoColor=white)](https://stackoverflow.com/tags/kentico-cloud)
+[![Build Status](https://api.travis-ci.com/Kentico/kontent-java-rx-sdk.svg?branch=master)](https://travis-ci.com/Kentico/kontent-java-rx-sdk)
+[![Stack Overflow](https://img.shields.io/badge/Stack%20Overflow-ASK%20NOW-FE7A16.svg?logo=stackoverflow&logoColor=white)](https://stackoverflow.com/tags/kentico-kontent)
 
-# Kentico Cloud Delivery JavaRx/AndroidRx SDK
+# Kontent Delivery JavaRx/AndroidRx SDK
 
 | Platform        | Maven Central Package  | jCenter Package | 
 | ------------- |:-------------:| :-------------:|
-| Android      | [![Android](https://img.shields.io/maven-central/v/com.kenticocloud/delivery-android.svg)](https://search.maven.org/#search%7Cga%7C1%7Ca%3A%22delivery-android%22) | [![Android](https://api.bintray.com/packages/kentico/KenticoCloudDeliveryJavaRxSDK/delivery-android/images/download.svg)](https://bintray.com/kentico/KenticoCloudDeliveryJavaRxSDK/delivery-android) |
-| JavaRx      | [![JavaRx](https://img.shields.io/maven-central/v/com.kenticocloud/delivery-rx.svg)](https://search.maven.org/#search%7Cga%7C1%7Ca%3A%22delivery-rx%22) | [![JavaRx](https://api.bintray.com/packages/kentico/KenticoCloudDeliveryJavaRxSDK/delivery-rx/images/download.svg)](https://bintray.com/kentico/KenticoCloudDeliveryJavaRxSDK/delivery-rx) |
+| Android      | [![Android](https://img.shields.io/maven-central/v/com.github.kentico/kontent-delivery-android.svg)](https://search.maven.org/#search%7Cga%7C1%7Ca%3A%22kontent-delivery-android%22) | [![Android](https://api.bintray.com/packages/kentico/kontent-java-rx-sdk/kontent-delivery-android/images/download.svg)](https://bintray.com/kentico/kontent-java-rx-sdk/delivery-android) |
+| JavaRx      | [![JavaRx](https://img.shields.io/maven-central/v/com.github.kentico/kontent-delivery-rx.svg)](https://search.maven.org/#search%7Cga%7C1%7Ca%3A%22kontent-delivery-rx%22) | [![JavaRx](https://api.bintray.com/packages/kentico/kontent-java-rx-sdk/delivery-rx/images/download.svg)](https://bintray.com/kentico/kontent-java-rx-sdk/delivery-rx) |
 
 ## Summary
 
-Kentico Cloud Delivery JavaRx/AndroidRx SDK is a client library for retrieving content from [Kentico Cloud](https://kenticocloud.com/). It is written in Java 7 for both Java & Android projects. The SDK is available as `delivery-rx` and `delivery-android` on [Maven Central](https://search.maven.org/#search%7Cga%7C1%7Ckenticocloud) and [jCenter](https://bintray.com/kentico-timothyf/kenticocloud-maven/delivery-rx).
+Kontent Delivery JavaRx/AndroidRx SDK is a client library for retrieving content from [Kontent](https://kontent.ai/). It is written in Java 7 for both Java & Android projects. The SDK is available as `kontent-delivery-rx` and `kontent-delivery-android` on [Maven Central](https://search.maven.org/#search%7Cga%7C1%7Ckontent) and [jCenter](https://bintray.com/kentico-timothyf/kontent-java-rx-sdk/kontent-delivery-rx).
 
 The SDK is built with [ReactiveX programming](http://reactivex.io/) and supports [RxJava2](https://github.com/ReactiveX/RxJava) and [RxAndroid](https://github.com/ReactiveX/RxAndroid) querying. It also integrates with [OkHttp](http://square.github.io/okhttp/) for those developers who do not want to use *Rx*.
 
@@ -27,21 +27,21 @@ The first step is to include the SDK in your project, for example, as a Gradle c
 #### Java
 
 ```
-implementation 'com.kenticocloud:delivery-rx:3.1.0'
+api 'com.github.kentico:kontent-delivery-rx:4.0.0'
 ```
 
 #### Android
 
 ```
-implementation 'com.kenticocloud:delivery-android:3.1.0'
+api 'com.github.kentico:kontent-delivery-android:4.0.0'
 ```
 
-**Note**: The only difference between these two dependencies is the 'Observable' they present for ReactiveX to subscribe to. Android will present a standard *Rx2AndroidNetworking* request while Java will present a generic *http* request as an observable. Most of your imports will come from the shared `com.kenticocloud.delivery_core` which is automatically included with both packages.
+**Note**: The only difference between these two dependencies is the 'Observable' they present for ReactiveX to subscribe to. Android will present a standard *Rx2AndroidNetworking* request while Java will present a generic *http* request as an observable. Most of your imports will come from the shared `com.github.kentico.kontent-delivery-core` which is automatically included with both packages.
 
 ### Configuration
 
 ```java
-// Kentico Cloud project ID
+// Kontent project ID
 String projectId = "975bf280-fd91-488c-994c-2f04416e5ee3";
 
 // Type resolvers are required to convert the retrieved content items to their strongly typed models
@@ -51,11 +51,11 @@ List<TypeResolver<?>> typeResolvers = new ArrayList<>();
 // First, create strongly typed models representing your items. 
 // This is optional, but strongly recommended. It is best practice to use safe types 
 // instead of relying on dynamic objects and values. For more details, see
-// https://developer.kenticocloud.com/v1/docs/strongly-typed-models
+// https://docs.kontent.ai/tutorials/develop-apps/get-content/using-strongly-typed-models
 // Here is an example of a strongly-typed model for the 'Cafe' content type.
 public final class Cafe extends ContentItem {
 
-    // Codename of your content type in Kentico Cloud
+    // Codename of your content type in Kontent
     public static final String TYPE = "cafe";
 
     @ElementMapping("country")
@@ -97,8 +97,8 @@ DeliveryConfig config = DeliveryConfig.newConfig(projectId)
 
 Imports
 ```java
-import com.kenticocloud.delivery_rx.DeliveryService;
-import com.kenticocloud.delivery_core.IDeliveryService;
+import com.github.kentico.kontent_delivery_rx.DeliveryService;
+import com.github.kentico.kontent_delivery_core.IDeliveryService;
 ```
 
 Service
@@ -110,8 +110,8 @@ IDeliveryService deliveryService = new DeliveryService(config);
 
 Imports
 ```java
-import com.kenticocloud.delivery_android.DeliveryAndroidService;
-import com.kenticocloud.delivery_core.IDeliveryService;
+import com.github.kentico.kontent-delivery-android.DeliveryAndroidService;
+import com.github.kentico.kontent_delivery_core.IDeliveryService;
 ```
 
 Service
@@ -190,7 +190,7 @@ public final class Coffee extends ContentItem {
 
 #### Using custom models for Custom Elements
 
-Custom elements are a type of content elements that you define yourself within Kentico Cloud. See [Integrating your own content editing features](https://developer.kenticocloud.com/docs/integrating-content-editing-features) to learn more about creating and using your own elements.
+Custom elements are a type of content elements that you define yourself within Kontent. See [Integrating your own content editing features](https://docs.kontent.ai/tutorials/develop-apps/integrate/integrating-your-own-content-editing-features) to learn more about creating and using your own elements.
 
 Here's an example of a custom element named "color":
 
@@ -230,7 +230,7 @@ Note that Custom elements are only supported in the latest version of the SDK.
 
 ### Filtering, sorting
 
-The SDK contains all available [filters](https://developer.kenticocloud.com/v1/reference#content-filtering) and other parameters ([sort](https://developer.kenticocloud.com/v1/reference#content-ordering), [projection](https://developer.kenticocloud.com/v1/reference#projection), [paging](https://developer.kenticocloud.com/v1/reference#listing-response-paging)) as predefined methods for each query type (different options are available for items and taxonomies query). All of these methods are written in a builder pattern to help you create queries more efficiently.
+The SDK contains all available [filters](https://docs.kontent.ai/reference/delivery-api#tag/Filtering-content) and other parameters ([sort](https://docs.kontent.ai/tutorials/develop-apps/get-content/getting-content#a-ordering-content-items), [projection](https://docs.kontent.ai/reference/delivery-api#tag/Projection), [paging](https://docs.kontent.ai/tutorials/develop-apps/get-content/getting-content#a-getting-content-items)) as predefined methods for each query type (different options are available for items and taxonomies query). All of these methods are written in a builder pattern to help you create queries more efficiently.
 
 Example:
 
@@ -377,7 +377,7 @@ deliveryService.items()
 The code above outputs the following URL:
 
 ```
-https://deliver.kenticocloud.com/683771be-aa26-4887-b1b6-482f56418ffd/items?elements.title=Warrior&limit=5&depth=2&skip=1
+https://deliver.kontent.ai/683771be-aa26-4887-b1b6-482f56418ffd/items?elements.title=Warrior&limit=5&depth=2&skip=1
 ```
 
 ### Advanced configuration
@@ -389,8 +389,8 @@ During initialization of the `DeliveryConfig` you can configure the following op
 | withTypeResolvers | Sets type resolvers responsible for mapping API responses to strongly typed models.
 | withPreviewApiKey      | Sets preview API key.
 | withSecuredApiKey | Sets secured API key.
-| withDeliveryApiUrl | Sets custom URL of a Kentico Cloud endpoint.
-| withDeliveryPreviewApiUrl | Sets custom URL of a Kentico Cloud preview endpoint.
+| withDeliveryApiUrl | Sets custom URL of a Kontent endpoint.
+| withDeliveryPreviewApiUrl | Sets custom URL of a Kontent preview endpoint.
 | withThrowExceptionForUnknownTypes | If enabled, the SDK will throw an Exception when it cannot find a strongly typed model (type resolver) of an item in the response.
 | withDefaultQueryConfig | Sets default query config for all queries. This is useful when you want to set a default behavior and then override it on a per-query level.
 
@@ -405,13 +405,13 @@ IDeliveryConfig config = DeliveryConfig.newConfig("projectId")
 
 ### Handling errors
 
-The SDK will automatically map [Kentico Cloud error responses](https://developer.kenticocloud.com/v1/reference#error-responses) to a `KenticoCloudResponseException` runtime exception that you can handle.
+The SDK will automatically map [Kontent error responses](https://docs.kontent.ai/reference/delivery-api#section/Errors) to a `KontentResponseException` runtime exception that you can handle.
 
 ```java
 try {
     DeliveryItemListingResponse<IContentItem> response = deliveryService.items().get();
-} catch (KenticoCloudResponseException ex) {
-    String cloudErrorMessage = ex.getMessage(); // i.e. missing item
+} catch (KontentResponseException ex) {
+    String kontentErrorMessage = ex.getMessage(); // i.e. missing item
 } catch (Exception ex){
     // other error
 }
@@ -421,10 +421,10 @@ try {
 
 | Android | JavaRx |
 | ------ |-----|
-| [![Android](https://vignette.wikia.nocookie.net/scribblenauts/images/2/24/Android_Logo.png/revision/latest?cb=20130410160638)](https://github.com/Kentico/KenticoCloudDeliveryJavaRxSDK/tree/master/sample-android-app) | [![JavaRx](http://reactivex.io/assets/Rx_Logo_S.png)](https://github.com/Kentico/KenticoCloudDeliveryJavaRxSDK/tree/master/sample-java-app) |
+| [![Android](https://vignette.wikia.nocookie.net/scribblenauts/images/2/24/Android_Logo.png/revision/latest?cb=20130410160638)](https://github.com/Kentico/kontent-java-rx-sdk/tree/master/sample-android-app) | [![JavaRx](http://reactivex.io/assets/Rx_Logo_S.png)](https://github.com/Kentico/kontent-java-rx-sdk/tree/master/sample-java-app) |
 
 ## Feedback & Contributing
 
-Check out the [contributing](https://github.com/Kentico/KenticoCloudDeliveryJavaRxSDK/blob/master/CONTRIBUTING.md) page to see the best places to file issues, start discussions, and begin contributing.
+Check out the [contributing](https://github.com/Kentico/kontent-java-rx-sdk/blob/master/CONTRIBUTING.md) page to see the best places to file issues, start discussions, and begin contributing.
 
-![Analytics](https://kentico-ga-beacon.azurewebsites.net/api/UA-69014260-4/Kentico/KenticoCloudDeliveryJavaRxSDK?pixel)
+![Analytics](https://kentico-ga-beacon.azurewebsites.net/api/UA-69014260-4/Kentico/kontent-java-rx-sdk?pixel)
