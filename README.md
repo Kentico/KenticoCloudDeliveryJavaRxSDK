@@ -5,8 +5,8 @@
 
 | Platform        | Maven Central Package  | jCenter Package | 
 | ------------- |:-------------:| :-------------:|
-| Android      | [![Android](https://img.shields.io/maven-central/v/com.github.kentico/kontent-delivery-android.svg)](https://search.maven.org/#search%7Cga%7C1%7Ca%3A%22kontent-delivery-android%22) | [![Android](https://api.bintray.com/packages/kentico/kontent-java-rx-sdk/kontent-delivery-android/images/download.svg)](https://bintray.com/kentico/kontent-java-rx-sdk/delivery-android) |
-| JavaRx      | [![JavaRx](https://img.shields.io/maven-central/v/com.github.kentico/kontent-delivery-rx.svg)](https://search.maven.org/#search%7Cga%7C1%7Ca%3A%22kontent-delivery-rx%22) | [![JavaRx](https://api.bintray.com/packages/kentico/kontent-java-rx-sdk/delivery-rx/images/download.svg)](https://bintray.com/kentico/kontent-java-rx-sdk/delivery-rx) |
+| Android      | [![Android](https://img.shields.io/maven-central/v/com.github.kentico/kontent-delivery-android.svg)](https://search.maven.org/#search%7Cga%7C1%7Ca%3A%22kontent-delivery-android%22) | [![Android](https://api.bintray.com/packages/kentico/kontent-java-rx-sdk/kontent-delivery-android/images/download.svg)](https://bintray.com/kentico/kontent-java-rx-sdk/kontent-delivery-android) |
+| JavaRx      | [![JavaRx](https://img.shields.io/maven-central/v/com.github.kentico/kontent-delivery-rx.svg)](https://search.maven.org/#search%7Cga%7C1%7Ca%3A%22kontent-delivery-rx%22) | [![JavaRx](https://api.bintray.com/packages/kentico/kontent-java-rx-sdk/kontent-delivery-rx/images/download.svg)](https://bintray.com/kentico/kontent-java-rx-sdk/kontent-delivery-rx) |
 
 ## Summary
 
