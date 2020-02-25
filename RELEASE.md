@@ -1,24 +1,32 @@
-Release Guide for Delivery JavaRX SDK
+# Release Guide for Delivery JavaRX SDK
 
-Before releasing a new version, ensure the following:
+ *Before releasing a new version, ensure the following:* 
 
-New tests have been created for any new functionality you have added
-All existing tests pass
-Pull latest from master branch
+1. New tests have been created for any new functionality you have added
+2. All existing tests pass
+3. Pull latest from master branch
 
 To release a new version of the SDK you will need to follow the below guide:
 
 First, add the following lines to your local.properties within the Android SDK project:
 
-BINTRAY_USER=<bintray username>
-BINTRAY_KEY=<bintray api key>
-BINTRAY_GPG=<gpg key for signing artifacts in order to be transferred to maven>
-SONATYPE_USER=<sonatype user>
-SONATYPE_PASSWORD=<sonatype password>
-SDK_VERSION=<sdk version, i.e '3.0.2'>
-RX_VERSION_DESC=<description for what is included in this version to rx sdk>
-CORE_VERSION_DESC=<description for what is included in this version to core sdk>
-ANDROID_VERSION_DESC=<description for what is included in this version to android sdk>
+>BINTRAY_USER=\<bintray username\>
+
+>BINTRAY_KEY=\<bintray api key\>
+
+>BINTRAY_GPG=\<gpg key for signing artifacts in order to be transferred to maven\>
+
+>SONATYPE_USER=\<sonatype user\>
+
+>SONATYPE_PASSWORD=\<sonatype password\>
+
+>SDK_VERSION=\<sdk version, i.e '3.0.2'\>
+
+>RX_VERSION_DESC=\<description for what is included in this version to rx sdk\>
+
+>CORE_VERSION_DESC=\<description for what is included in this version to core sdk\>
+
+>ANDROID_VERSION_DESC=\<description for what is included in this version to android sdk\>
 
 The Bintray user must be part of the "Kentico" organization on Bintray before publishing. To request access to 'Kentico' organization please email developerscommunity@kentico.com.
 
