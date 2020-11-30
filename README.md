@@ -1,3 +1,8 @@
+[![No Maintenance Intended](https://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+## :warning: Deprecation Notice
+> This repository is no longer being maintained for compatibility with the latest version of the product and will be considered deprecated soon. We strongly recommend using the [Kontent Java Packages mono repository](https://github.com/Kentico/kontent-java-packages) that provides comprehensive functionality for Kontent projects using Java.<br /><br />More information regarding merging the repositories can be seen in the [official Kentico Kontent Changelog](https://docs.kontent.ai/changelog/product-changelog?show=sdks#a-new-version-of-java-sdk-and-model-generator).
+<br />
+
 [![Build Status](https://api.travis-ci.com/Kentico/kontent-java-rx-sdk.svg?branch=master)](https://travis-ci.com/Kentico/kontent-java-rx-sdk)
 [![Stack Overflow](https://img.shields.io/badge/Stack%20Overflow-ASK%20NOW-FE7A16.svg?logo=stackoverflow&logoColor=white)](https://stackoverflow.com/tags/kentico-kontent)
 
