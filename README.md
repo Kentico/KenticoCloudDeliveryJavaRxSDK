@@ -1,6 +1,6 @@
 [![No Maintenance Intended](https://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
-> <h2 align="center">:warning:<br><br>Archive Notice</h2>
-This repository is no longer being maintained for compatibility with the latest version of the product and will be considered deprecated soon. We strongly recommend using the [Kontent Java Packages mono repository](https://github.com/Kentico/kontent-java-packages) that provides comprehensive functionality for Kontent projects using Java.<br /><br />More information regarding merging the repositories can be seen in the [official Kentico Kontent Changelog](https://docs.kontent.ai/changelog/product-changelog?show=sdks#a-new-version-of-java-sdk-and-model-generator).
+## :warning: Deprecation Notice
+> This repository is no longer being maintained for compatibility with the latest version of the product and will be considered deprecated soon. We strongly recommend using the [Kontent Java Packages mono repository](https://github.com/Kentico/kontent-java-packages) that provides comprehensive functionality for Kontent projects using Java.<br /><br />More information regarding merging the repositories can be seen in the [official Kentico Kontent Changelog](https://docs.kontent.ai/changelog/product-changelog?show=sdks#a-new-version-of-java-sdk-and-model-generator).
 <br />
 
 [![Build Status](https://api.travis-ci.com/Kentico/kontent-java-rx-sdk.svg?branch=master)](https://travis-ci.com/Kentico/kontent-java-rx-sdk)
